@@ -14,13 +14,13 @@ set autoread
 
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
-let mapleader = "\<space>"
+let mapleader = ";"
 
 " Fast saving
 nmap <leader>w :w!<cr>
 
 " Open Nerdtree
-nmap <leader>nt :NERDTree<cr>
+nmap <leader>nt :NERDTreeToggle<cr>
 
 " Open taglist
 nmap <leader>tl :Tlist<cr>
@@ -34,23 +34,25 @@ vnoremap <silent> <Enter> :EasyAlign<Enter>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Neobundle
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-call neobundle#rc(expand('~/.vim/bundle/'))
+call neobundle#begin(expand('~/.vim/bundle/'))
 
 " let NeoBundle manage NeoBundle
 NeoBundleFetch 'Shougo/neobundle.vim'
 
 NeoBundle 'junegunn/vim-easy-align'
-NeoBundle 'bling/vim-airline'
+NeoBundle 'vim-airline/vim-airline'
+NeoBundle 'vim-airline/vim-airline-themes'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'scrooloose/syntastic'
-" NeoBundle 'scrooloose/nerdcommenter'
-NeoBundle 'tomtom/tcomment_vim'
+NeoBundle 'scrooloose/nerdcommenter'
+" NeoBundle 'tomtom/tcomment_vim'
 NeoBundle 'vim-scripts/taglist.vim'
-NeoBundle 'Valloric/YouCompleteMe'
+NeoBundle 'vim-scripts/vim-auto-save'
+" NeoBundle 'Valloric/YouCompleteMe'
+NeoBundle 'Shougo/neocomplete.vim'
 NeoBundle 'rstacruz/sparkup', {'rtp': 'vim/'}
 NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'kien/ctrlp.vim'
-NeoBundle 'bling/vim-airline'
 NeoBundle 'bling/vim-bufferline'
 NeoBundle 'jiangmiao/auto-pairs'
 
@@ -63,9 +65,10 @@ NeoBundle 'tomasr/molokai'
 NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'kana/vim-textobj-line'
 
+call neobundle#end()
+
 " Enable filetype plugins
-filetype plugin on
-filetype indent on
+filetype plugin indent on
 
 NeoBundleCheck
 
@@ -166,11 +169,7 @@ set ffs=unix,dos,mac
 " Airline
 let g:airline#extension#tabline#enabled=1
 let g:airline_powerline_font=1
-if has("gui_running")
-  let g:airline_theme="molokai"
-else
-  let g:airline_theme="luna"
-endif
+let g:airline_theme="molokai"
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -231,6 +230,9 @@ inoremap <C-j> <Down>
 inoremap <C-k> <Up>
 inoremap <C-l> <Right>
 inoremap <C-d> <DELETE>
+
+" normal mode shortcut
+nnoremap <space> i<space><esc>
 
 " Close the current buffer
 map <leader>bd :Bclose<cr>
@@ -335,7 +337,7 @@ vnoremap <silent> <leader>r :call VisualSelection('replace')<CR>
 " To go to the previous search results do:
 "   <leader>p
 "
-map <leader>cc :botright cope<cr>
+map <leader>dsr :botright cope<cr>
 map <leader>co ggVGy:tabnew<cr>:set syntax=qf<cr>pgg
 map <leader>n :cn<cr>
 map <leader>p :cp<cr>
@@ -427,3 +429,44 @@ function! <SID>BufcloseCloseIt()
      execute("bdelete! ".l:currentBufNum)
    endif
 endfunction
+
+""""""""""""""""""""""""""""""""""""""""""""""""
+" nerdcommenter settings
+"""""""""""""""""""""""""""""""""""""""""""""""
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+
+" Set a language to use its alternate delimiters by default
+let g:NERDAltDelims_java = 1
+
+" Add your own custom formats or override the defaults
+let g:NERDCustomDelimiters = { 'c': { 'left': '//' }  }
+
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+
+""""""""""""""""""""""""""""""""""""""""""""""""
+" vim-auto-saving settings
+"""""""""""""""""""""""""""""""""""""""""""""""
+" enable AutoSave when startup
+let g:auto_save = 1  
+
+" do not changev the 'updatetime' option
+let g:auto_save_no_updatetime = 1
+
+" do not save while in insert mode
+let g:auto_save_in_insert_mode = 0
+
+""""""""""""""""""""""""""""""""""""""""""""""""
+" neocomplete settings
+"""""""""""""""""""""""""""""""""""""""""""""""
+let g:neocomplete#enable_at_startup = 1
