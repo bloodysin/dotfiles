@@ -39,6 +39,7 @@ call neobundle#begin(expand('~/.vim/bundle/'))
 " let NeoBundle manage NeoBundle
 NeoBundleFetch 'Shougo/neobundle.vim'
 
+
 NeoBundle 'junegunn/vim-easy-align'
 NeoBundle 'vim-airline/vim-airline'
 NeoBundle 'vim-airline/vim-airline-themes'
